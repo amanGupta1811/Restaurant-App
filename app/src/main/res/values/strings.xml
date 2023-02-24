@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Gulati Ki Rasoi</string>
+    <string name="Appname">Gulati ki Rasoi</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="t_c"><![CDATA[T&C*]]></string>
+
+    <string-array name="City">
+        <item>Delhi</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="Delhi">
+        <item>Rohini Sector 1</item>
+        <item>Rohini Sector 2</item>
+        <item>Rohini Sector 3</item>
+        <item>Rohini Sector 4</item>
+        <item>Rohini Sector 5</item>
+        <item>Rohini Sector 6</item>
+        <item>Shastri Nagar</item>
+        <item>Anand Parvath</item>
+    </string-array>
+
+    <string-array name="Other">
+        <item>Other</item>
+    </string-array>
+</resources>

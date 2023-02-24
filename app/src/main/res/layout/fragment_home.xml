@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".homeFragment">
+
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/homeRecycler"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       />
+
+   <androidx.appcompat.widget.Toolbar
+       android:id="@+id/tool"
+       android:layout_width="match_parent"
+       android:layout_height="56dp"
+       android:layout_margin="18dp"
+       android:background="@drawable/button_background"
+       android:backgroundTint="@color/blue"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       android:visibility="gone"
+       />
+
+   <TextView
+       android:id="@+id/next"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Next"
+       android:textColor="@color/yellow"
+       android:textAllCaps="false"
+       android:textStyle="bold"
+       app:layout_constraintEnd_toEndOf="@id/tool"
+       app:layout_constraintBottom_toBottomOf="@id/tool"
+       app:layout_constraintTop_toTopOf="@id/tool"
+       android:layout_margin="18dp"
+       android:textSize="25sp"
+       android:visibility="gone"
+       />
+
+   <TextView
+       android:id="@+id/item"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="item"
+       android:textColor="@color/yellow"
+       android:textAllCaps="false"
+       android:textStyle="normal"
+       app:layout_constraintStart_toStartOf="@id/tool"
+       app:layout_constraintTop_toTopOf="@id/tool"
+       android:layout_marginLeft="24dp"
+       android:textSize="18sp"
+       android:visibility="gone"
+       />
+
+   <TextView
+       android:id="@+id/itemT"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="ITEM"
+       android:textColor="@color/yellow"
+       android:textAllCaps="false"
+       android:textStyle="normal"
+       app:layout_constraintStart_toEndOf="@id/item"
+       app:layout_constraintTop_toTopOf="@id/tool"
+       android:layout_marginLeft="4dp"
+       android:textSize="18sp"
+       android:visibility="gone"
+       />
+
+   <TextView
+       android:id="@+id/rupees"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="rupee"
+       android:textColor="@color/yellow"
+       android:textAllCaps="false"
+       android:textStyle="normal"
+       app:layout_constraintStart_toStartOf="@id/tool"
+       app:layout_constraintBottom_toBottomOf="@id/tool"
+       android:layout_marginLeft="24dp"
+       android:textSize="18sp"
+       android:visibility="gone"
+       />
+
+   <TextView
+       android:id="@+id/taxes"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="plus taxes"
+       android:textColor="@color/yellow"
+       android:textAllCaps="false"
+       android:textStyle="normal"
+       app:layout_constraintStart_toEndOf="@id/rupees"
+       app:layout_constraintBottom_toBottomOf="@id/tool"
+       android:layout_marginLeft="6dp"
+       android:textSize="18sp"
+       android:visibility="gone"
+       />
+
+
+   <ProgressBar
+       android:id="@+id/pBar"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintLeft_toLeftOf="parent"
+       app:layout_constraintRight_toRightOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
