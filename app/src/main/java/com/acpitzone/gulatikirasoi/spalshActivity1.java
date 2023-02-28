@@ -33,6 +33,7 @@ public class spalshActivity1 extends AppCompatActivity {
                 Intent i;
                 if(!city.isEmpty()&&!area.isEmpty()){
                     i = new Intent(spalshActivity1.this, MainActivity.class);
+
                 }
                 else{
                     i = new Intent(spalshActivity1.this, SpalshScreen.class);

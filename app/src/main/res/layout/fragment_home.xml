@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg4"
     tools:context=".homeFragment">
 
    <androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        app:layout_constraintTop_toTopOf="parent"
+       app:layout_constraintBottom_toTopOf="@id/tool"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
        />
@@ -114,5 +116,19 @@
        app:layout_constraintLeft_toLeftOf="parent"
        app:layout_constraintRight_toRightOf="parent"/>
 
+
+   <com.google.android.material.button.MaterialButton
+       android:id="@+id/menuB"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="Menu"
+       android:background="@drawable/button_background"
+       app:backgroundTint="@color/black"
+       android:drawableLeft="@drawable/baseline_restaurant_menu_24"
+       app:layout_constraintBottom_toTopOf="@id/tool"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       android:layout_marginBottom="20dp"
+       />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

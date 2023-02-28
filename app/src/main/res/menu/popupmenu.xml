@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <item
+        android:id="@+id/rec"
+        android:title="Menu"
+        />
+    <item
+        android:id="@+id/breakF"
+        android:title="Breakfast"
+        />
+    <item
+        android:id="@+id/combo"
+        android:title="Combo Meal"
+        />
+    <item
+        android:id="@+id/main"
+        android:title="Main Course"
+        />
+    <item
+        android:id="@+id/drinks"
+        android:title="Beverages"
+        />
+
+
+</menu>

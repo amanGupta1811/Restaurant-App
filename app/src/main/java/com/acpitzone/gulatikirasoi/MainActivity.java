@@ -19,9 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
-        getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, new homeFragment());
+        getSupportFragmentManager().beginTransaction().add(R.id.flFragment, new homeFragment()).commit();
 
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new notificationFragment();
                         break;
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.flFragment, fragment).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.flFragment, fragment).commit();
                 return true;
             }
         });

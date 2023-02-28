@@ -32,14 +32,23 @@ public class offerAdapter extends RecyclerView.Adapter<offerAdapter.offerViewMod
         offers offers;
         offers = offerslist.get(position);
 
-        holder.offerName.setText(offers.getOfferN());
-        holder.offerCode.setText(offers.getOfferC());
+        holder.offerName.setText(offerslist.get(position).getOfferN());
+        holder.offerCode.setText(offerslist.get(position).getOfferC());
+    }
+
+    public void upDate(List<offers> upDate){
+        offerslist.clear();
+        offerslist.addAll(upDate);
+
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
         return offerslist.size();
     }
+
+
 
     public class offerViewModel extends RecyclerView.ViewHolder{
         TextView offerName, offerCode;

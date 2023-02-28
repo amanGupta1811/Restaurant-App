@@ -2,23 +2,20 @@ package com.acpitzone.gulatikirasoi;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-//import android.widget.Toolbar;
 import androidx.appcompat.widget.Toolbar;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -26,24 +23,27 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 
 public class homeFragment extends Fragment implements SelectedListner {
-
     RecyclerView homeRecyclerView;
     Toolbar tool;
     TextView next, taxes, rupees, itemT, itemI;
+    Button menuB;
     ProgressBar pBar;
     List<item> itemList = new ArrayList<>();
     private List<item> data = new ArrayList<>();
+    List<item> cartData = new ArrayList<item>();
+
+    List<String> name = new ArrayList<>();
+    List<String> price = new ArrayList<>();
 
     String url = "https://gulatikirasoi.com/menu.php";
     private itemsAdapter itemsAdapter;
@@ -69,14 +69,20 @@ public class homeFragment extends Fragment implements SelectedListner {
         rupees = view.findViewById(R.id.rupees);
         taxes = view.findViewById(R.id.taxes);
         pBar = view.findViewById(R.id.pBar);
+        menuB = view.findViewById(R.id.menuB);
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getContext(), cart.class);
+                i.putExtra("cartName",(ArrayList<String>) name);
+                i.putExtra("cartPrice", (ArrayList<String>) price);
                 startActivity(i);
             }
         });
+
+        menuB.setOnClickListener((v)->menu());
+
 
         homeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -84,23 +90,8 @@ public class homeFragment extends Fragment implements SelectedListner {
 
         itemsAdapter = new itemsAdapter(itemList, this);
 
-//        itemList.add(new item(R.drawable.bg2, "Veg Burger", "80", "veg"));
-//        itemList.add(new item(R.drawable.bg4, "Pizza", "280", "veg"));
-//        itemList.add(new item(R.drawable.bg2, "Veg Birayani", "180", "veg"));
-//        itemList.add(new item(R.drawable.bg4, "Hakka Noodles", "120", "veg"));
-//        itemList.add(new item(R.drawable.bg2, "Chole Bhature", "150", "veg"));
-//        itemList.add(new item(R.drawable.bg4, "Veg Momos", "80", "veg"));
-//        itemList.add(new item(R.drawable.bg2, "Butter Panner Masala Dosa", "150", "veg"));
-//        itemList.add(new item(R.drawable.bg2, "Masala Dosa", "110", "veg"));
-//        itemList.add(new item(R.drawable.bg2, "Plain Dosa", "80", "veg"));
-//        itemList.add(new item(R.drawable.bg4, "Pasata", "130", "veg"));
-//        itemList.add(new item(R.drawable.bg2, "Paneer Tikka", "180", "veg"));
-//        itemList.add(new item(R.drawable.bg4, "Mushroom Tikka", "380", "veg"));
-//        itemList.add(new item(R.drawable.bg2, "Honey chilli potato", "140", "veg"));
-//        itemList.add(new item(R.drawable.bg4, "Veg Manchurian", "100", "veg"));
-//        itemList.add(new item(R.drawable.bg4, "Aloo Tikki", "60", "veg"));
+        fetchData("Menu");
 
-        fetchData();
 
 
 
@@ -109,14 +100,10 @@ public class homeFragment extends Fragment implements SelectedListner {
 
 
         return view;
-
-       // itemsAdapter.upDate(itemList);
-
-
     }
 
 
-    private void fetchData() {
+    private void fetchData(String tag) {
         pBar.setVisibility(View.VISIBLE);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -132,19 +119,38 @@ public class homeFragment extends Fragment implements SelectedListner {
 
                     if (fetchSuccess.matches("1")) {
 
+
+
                         for (int i = 0; i < jsonArray.length(); i++) {
 
                             JSONObject object = jsonArray.getJSONObject(i);
 
-                            String id = object.getString("id");
-                            String name = object.getString("name");
-                            String price = object.getString("price");
-                            String type = object.getString("type");
-                           // String video = "https://sdcsupermarket.com/videos/" + object.getString("video");
-                            String image = "https://gulatikirasoi.com/menu_images/" + object.getString("image");
-                            item menuData = new item(id, name, price,type, image);
-                            data.add(menuData);
+                            String tagF = object.getString("tag");
+
+                            menuB.setText(tag);
+
+                            if(tag.equals(tagF)) {
+                                String id = object.getString("id");
+                                String name = object.getString("name");
+                                String price = object.getString("price");
+                                String type = object.getString("type");
+                                // String video = "https://sdcsupermarket.com/videos/" + object.getString("video");
+                                String image = "https://gulatikirasoi.com/menu_images/" + object.getString("image");
+                                item menuData = new item(id, name, price, type, image);
+                                data.add(menuData);
+                            } else if (tag.equals("Menu")) {
+                                String id = object.getString("id");
+                                String name = object.getString("name");
+                                String price = object.getString("price");
+                                String type = object.getString("type");
+                                // String video = "https://sdcsupermarket.com/videos/" + object.getString("video");
+                                String image = "https://gulatikirasoi.com/menu_images/" + object.getString("image");
+                                item menuData = new item(id, name, price, type, image);
+                                data.add(menuData);
+                            }
+
                         }
+                        Collections.shuffle(data);
                         itemsAdapter.upDate(data);
 
 
@@ -186,11 +192,17 @@ public class homeFragment extends Fragment implements SelectedListner {
 
     @Override
     public void onItemClicked(item item, int a, String minMax) {
-
+//        price = new ArrayList<>();
+//        name = new ArrayList<>();
 
         if (minMax.equals("+")) {
 
             String x = itemI.getText().toString();
+            String id = item.getId();
+            String nameS = item.getName();
+            String priceS = item.getPrice();
+            String type = item.getType();
+            String image = item.getImage();
 
             if (!(x.equals("item"))) {
 
@@ -199,7 +211,9 @@ public class homeFragment extends Fragment implements SelectedListner {
                 int y = Integer.parseInt(x);
                 int b = Integer.parseInt(z);
 
+
                 int c = Integer.parseInt(item.getPrice());
+
 
                 tool.setVisibility(View.VISIBLE);
                 next.setVisibility(View.VISIBLE);
@@ -209,6 +223,8 @@ public class homeFragment extends Fragment implements SelectedListner {
                 rupees.setVisibility(View.VISIBLE);
                 itemT.setVisibility(View.VISIBLE);
                 taxes.setVisibility(View.VISIBLE);
+
+
 
             } else if (x.equals("item")) {
                 itemI.setText("" + (a));
@@ -227,9 +243,16 @@ public class homeFragment extends Fragment implements SelectedListner {
                 itemT.setVisibility(View.GONE);
                 taxes.setVisibility(View.GONE);
             }
+            name.add(nameS);
+            price.add(priceS);
+        }
 
-        } else {
+
+
+        else {
             String x = itemI.getText().toString();
+            String nameA = item.getName();
+            String priceA = item.getPrice();
             if (x.equals("1") || x.equals("item")) {
 
                 itemI.setText("item");
@@ -260,8 +283,6 @@ public class homeFragment extends Fragment implements SelectedListner {
                 itemT.setVisibility(View.VISIBLE);
                 taxes.setVisibility(View.VISIBLE);
 
-
-
             } else {
                 tool.setVisibility(View.GONE);
                 next.setVisibility(View.GONE);
@@ -270,9 +291,31 @@ public class homeFragment extends Fragment implements SelectedListner {
                 itemT.setVisibility(View.GONE);
                 taxes.setVisibility(View.GONE);
             }
-
+            name.remove(nameA);
+            price.remove(priceA);
         }
 
+    }
+    public void menu(){
+        // Initializing the popup menu and giving the reference as current context
+        PopupMenu popupMenu = new PopupMenu(getContext(), menuB);
+
+
+        // Inflating popup menu from popup_menu.xml file
+        popupMenu.getMenuInflater().inflate(R.menu.popupmenu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                // Toast message on menu item clicked
+                data.clear();
+                fetchData((String) menuItem.getTitle());
+                homeRecyclerView.setAdapter(itemsAdapter);
+                Toast.makeText(getContext(), ""+menuItem.getTitle(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
+        // Showing the popup menu
+        popupMenu.show();
     }
 }
 
