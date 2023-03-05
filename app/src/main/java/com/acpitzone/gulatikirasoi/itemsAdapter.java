@@ -66,9 +66,6 @@ public class itemsAdapter extends RecyclerView.Adapter<itemsAdapter.itemViewHold
                     holder.addT.setText(""+ (i+1));
                     listner.onItemClicked(ItemsList.get(position),i+1,max);
                 }
-
-
-
             }
         });
         holder.sub.setOnClickListener(new View.OnClickListener() {

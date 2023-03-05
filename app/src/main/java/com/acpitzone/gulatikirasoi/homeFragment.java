@@ -1,7 +1,9 @@
 package com.acpitzone.gulatikirasoi;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -71,6 +73,12 @@ public class homeFragment extends Fragment implements SelectedListner {
         pBar = view.findViewById(R.id.pBar);
         menuB = view.findViewById(R.id.menuB);
 
+//        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("LocationDetails", Context.MODE_PRIVATE);
+//        String city = sharedPreferences.getString("City", "");
+//        String area = sharedPreferences.getString("Area", "");
+
+        //menuB.setText(area);
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,7 +98,7 @@ public class homeFragment extends Fragment implements SelectedListner {
 
         itemsAdapter = new itemsAdapter(itemList, this);
 
-        fetchData("Menu");
+       fetchData("Menu");
 
 
 
