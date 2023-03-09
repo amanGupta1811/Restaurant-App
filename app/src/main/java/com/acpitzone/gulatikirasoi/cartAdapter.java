@@ -8,11 +8,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class cartAdapter extends RecyclerView.Adapter<cartAdapter.cartViewHolder> {
 
-    private List<car> carList;
+    private List<car> carList = new ArrayList<>();
 
     public cartAdapter(List<car> carList) {
         this.carList = carList;

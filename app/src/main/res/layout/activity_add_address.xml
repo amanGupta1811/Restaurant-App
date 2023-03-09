@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".add_address">
+
+
+    <ImageView
+        android:id="@+id/img"
+        android:foreground="@drawable/forground_design"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="30dp"
+            >
+
+
+            <TextView
+                android:id="@+id/txt3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enter complete address"
+                android:textColor="@color/blue"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="30dp"
+                android:textAlignment="center"
+                />
+
+            <EditText
+                android:id="@+id/saveAs"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:hint="save as(work,home etc)"
+                android:textColor="@color/blue"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt3"
+                app:layout_constraintWidth_percent=".8"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittextbackground"
+                android:textAlignment="center"
+                android:drawablePadding="13dp"
+                />
+
+            <EditText
+                android:id="@+id/delivereyA"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:hint="Delivery area,street name etc"
+                android:textColor="@color/blue"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/saveAs"
+                app:layout_constraintWidth_percent=".8"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/edittextbackground"
+                android:textAlignment="center"
+                android:drawablePadding="13dp"
+                />
+
+            <EditText
+                android:id="@+id/cityA"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:hint="City"
+                android:textColor="@color/blue"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/delivereyA"
+                app:layout_constraintWidth_percent=".8"
+                android:layout_marginTop="30dp"
+                android:textAlignment="center"
+                android:background="@drawable/edittextbackground"
+                android:drawablePadding="13dp"
+                />
+
+            <EditText
+                android:id="@+id/complteA"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:hint="Complete address"
+                android:textColor="@color/blue"
+                android:inputType="text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cityA"
+                app:layout_constraintWidth_percent=".8"
+                android:layout_marginTop="30dp"
+                android:textAlignment="center"
+                android:background="@drawable/edittextbackground"
+                android:drawablePadding="43dp"
+                />
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="14dp"
+                android:text="Save address"
+                android:textColor="#0000FF"
+                android:textStyle="bold"
+                android:textSize="15dp"
+                android:textAlignment="center"
+                android:backgroundTint="#F6BE00"
+                android:background="@drawable/button_background"
+                app:layout_constraintTop_toBottomOf="@id/complteA"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintWidth_percent=".8"
+                android:layout_marginTop="20dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/pBarD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:elevation="12dp"
+        android:visibility="gone"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

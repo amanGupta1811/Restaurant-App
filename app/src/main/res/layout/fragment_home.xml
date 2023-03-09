@@ -15,6 +15,7 @@
        app:layout_constraintBottom_toTopOf="@id/tool"
        app:layout_constraintStart_toStartOf="parent"
        app:layout_constraintEnd_toEndOf="parent"
+       tools:listitem="@layout/items"
        />
 
    <androidx.appcompat.widget.Toolbar

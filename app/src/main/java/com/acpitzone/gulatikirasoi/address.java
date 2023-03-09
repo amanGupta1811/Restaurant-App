@@ -1,14 +1,18 @@
 package com.acpitzone.gulatikirasoi;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -27,41 +31,50 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.StringJoiner;
 
-public class coupon extends AppCompatActivity implements CouponListner {
+public class address extends AppCompatActivity implements addressListner{
+
+    RecyclerView recyclerView;
+    Button addA;
+    addressAdapter addressAdapter;
+    private static final int REQUEST_CODE_1 = 2;
+    List<addressData> addressDataList = new ArrayList<>();
+    List<addressData> data = new ArrayList<>();
     ProgressBar pBar;
-    RecyclerView couponRecycler;
-    private static final int REQUEST_CODE = 5;
-    coupenAdapter coupenAdapter;
-    List<coupen> couponList = new ArrayList<>();
-    List<coupen> data = new ArrayList<>();
-//    String total;
-//    float g_total;
-
-    String url = "https://gulatikirasoi.com/offer.php";
+    String url = "https://gulatikirasoi.com/address.php";
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coupon);
+        setContentView(R.layout.activity_address);
 
+        recyclerView = findViewById(R.id.addRecycler);
+        addA = findViewById(R.id.add_address);
+        pBar = findViewById(R.id.pBar7);
 
+        addA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(address.this,add_address.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
-        pBar = findViewById(R.id.pBar2);
-        couponRecycler = findViewById(R.id.coupenRecycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
-        couponRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-
-        coupenAdapter = new coupenAdapter(couponList,this);
+        addressAdapter = new addressAdapter(addressDataList,this);
 
         fetchData();
 
-        couponRecycler.setAdapter(coupenAdapter);
+        recyclerView.setAdapter(addressAdapter);
+
 
     }
 
-    private void fetchData() {
+    void fetchData(){
         pBar.setVisibility(View.VISIBLE);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -80,15 +93,15 @@ public class coupon extends AppCompatActivity implements CouponListner {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             String id = object.getString("id");
-                            String offerN = object.getString("offer_name");
-                            String offerC = object.getString("offer_code");
-                            String offerP = object.getString("offer_percent");
-                            String offerM = object.getString("offer_min_amt");
-                            coupen coupen = new coupen(id, offerN, offerC, offerP, offerM);
-                            data.add(coupen);
+                            String saveAs1 = object.getString("saveAs");
+                            String delivery1 = object.getString("delivery");
+                            String completeAddress1 = object.getString("completeAddress");
+                            String city1 = object.getString("city");
+                            addressData addressData= new addressData(id, saveAs1, delivery1, completeAddress1, city1);
+                            data.add(addressData);
                         }
                         // Collections.shuffle(data);
-                        coupenAdapter.upDate(data);
+                        addressAdapter.upDate(data);
                     } else {
                         Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
@@ -120,45 +133,34 @@ public class coupon extends AppCompatActivity implements CouponListner {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
-
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onCouponClick(coupen coupen) {
-        String percent = coupen.getOfferPercent1();
-        String min = coupen.getOfferMinAmt1();
-        float g_totalD;
-        float discount;
+    public void onAddressListner(addressData addressData) {
 
-        String total = getIntent().getStringExtra("gtotal");
-        float g_total = Float.parseFloat(total);
+        String saveAs = addressData.getSaveAl();
+        String delivery = addressData.getDeliveryAl();
+        String complete = addressData.getCompleteAl();
+        String city = addressData.getCityAl();
 
-        float percentAmt = Float.parseFloat(percent);
-        float minAmt = Float.parseFloat(min);
+        StringJoiner s = new StringJoiner(", ");
 
-        if(g_total>=minAmt){
-            discount = g_total*(percentAmt/100);
-            g_totalD = g_total - discount;
-        }
-        else{
-            discount = 0;
-            g_totalD = g_total;
-        }
+        String first_Str = "Delivery at " + saveAs;
+        s.add(delivery);
+        s.add(complete);
+        s.add(city);
+        String second_Str = s.toString();
 
-        String gTotalD = String.valueOf(g_totalD);
-
-//        Intent i = new Intent(coupon.this,cart.class);
-//        //i.putExtra("percentAmt",percentAmt);
-//        //i.putExtra("minAmt",minAmt);
-//        i.putExtra("grandT",gTotalD);
-//      //  i.putExtra("check","10");
-//        startActivity(i);
+        SharedPreferences sharedPreferences = getSharedPreferences("AddressDetails", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("first_Str", first_Str);
+        editor.putString("second_Str", second_Str);
+        editor.apply();
 
         Intent intent = new Intent();
-        intent.putExtra("grandT", gTotalD);
-        intent.putExtra("discountT", String.valueOf(discount));
-        setResult(5,intent);
+        setResult(2,intent);
         finish();
-
     }
 }

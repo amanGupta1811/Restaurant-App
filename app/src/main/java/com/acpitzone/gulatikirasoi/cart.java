@@ -2,10 +2,13 @@ package com.acpitzone.gulatikirasoi;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -31,22 +34,24 @@ import java.util.List;
 import java.util.Map;
 public class cart extends AppCompatActivity {
 
-    private static final int REQUEST_CODE = 1;
+    private static final int REQUEST_CODE = 5;
+    private static final int REQUEST_CODE_1 = 2;
     RecyclerView cartRecycler;
-    ArrayList<String> names;
-    ArrayList<String> price;
+    ArrayList<String> names = new ArrayList<>();
+    ArrayList<String> price = new ArrayList<>();
     cartAdapter cartAdapter;
     int x = 0;
 //     float gstI = 0;
     List<car> carList = new ArrayList<>();
-    TextView sub_total, grand_total, gst, deliveryCh, dis, dis_text;
-    Button couponBtn;
+    TextView sub_total, grand_total, gst, deliveryCh, dis, dis_text, strF, strS;
+    Button couponBtn,nextBtn;
     int percentAmt, minAmt;
     int y = 0;
     String url = "https://gulatikirasoi.com/charges.php";
     int chargesD;
     float gstD;
     ProgressBar pBar;
+    CardView cardView;
 
 
     @SuppressLint("MissingInflatedId")
@@ -64,9 +69,10 @@ public class cart extends AppCompatActivity {
         pBar = findViewById(R.id.pBarC);
         dis = findViewById(R.id.dis);
         dis_text = findViewById(R.id.dis_text);
-
-
-
+        nextBtn = findViewById(R.id.next_btn);
+        cardView = findViewById(R.id.add_Info);
+        strF = findViewById(R.id.str_first);
+        strS = findViewById(R.id.str_second);
 
         names = getIntent().getStringArrayListExtra("cartName");
         price = getIntent().getStringArrayListExtra("cartPrice");
@@ -74,6 +80,29 @@ public class cart extends AppCompatActivity {
         String total = getIntent().getStringExtra("grandT");
         //String check = getIntent().getStringExtra("check");
         //couponBtn.setText(total);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("AddressDetails", Context.MODE_PRIVATE);
+        String firstS = sharedPreferences.getString("first_Str", "");
+        String secondS = sharedPreferences.getString("second_Str", "");
+
+        if(!firstS.isEmpty()&&!secondS.isEmpty()){
+            cardView.setVisibility(View.VISIBLE);
+            strF.setText(firstS);
+            strS.setText(secondS);
+            nextBtn.setText("Add Payment Method");
+        }
+        else{
+            cardView.setVisibility(View.GONE);
+        }
+
+        nextBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),address.class);
+                startActivityForResult(i,2);
+                //finish();
+            }
+        });
 
         cartRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -98,11 +127,11 @@ public class cart extends AppCompatActivity {
         couponBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(cart.this, coupon.class);
-                i.putExtra("gtotal", String.valueOf(x));
+                Intent in = new Intent(getApplicationContext(), coupon.class);
+                in.putExtra("gtotal", String.valueOf(x));
                 // i.putExtra("cartList",carList);
                // y = 1;
-                startActivityForResult(i,5);
+                startActivityForResult(in,5);
             }
         });
 
@@ -111,24 +140,38 @@ public class cart extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       // if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
-            String updatedTotalAmount = data.getStringExtra("grandT");
-            String discountTo = data.getStringExtra("discountT");
-            grand_total.setText(updatedTotalAmount);
+//        if (requestCode == 5 && resultCode == RESULT_OK) {
+//            String updatedTotalAmount = data.getStringExtra("grandT");
+//            String discountTo = data.getStringExtra("discountT");
+//            grand_total.setText(updatedTotalAmount);
+//
+//            if (!discountTo.equals("0.0")) {
+//                dis.setVisibility(View.VISIBLE);
+//                dis.setText(discountTo);
+//                dis_text.setVisibility(View.VISIBLE);
+//                Toast.makeText(this, "You got Rs " + discountTo + " off !", Toast.LENGTH_LONG).show();
+//            } else {
+//                dis.setVisibility(View.GONE);
+//                dis_text.setVisibility(View.GONE);
+//                Toast.makeText(this, "Add more items to avail this offer", Toast.LENGTH_LONG).show();
+//            }
+//        } else if (requestCode == 2 && resultCode == RESULT_OK) {
+            SharedPreferences sharedPreferences = getSharedPreferences("AddressDetails", Context.MODE_PRIVATE);
+            String firstS = sharedPreferences.getString("first_Str", "");
+            String secondS = sharedPreferences.getString("second_Str", "");
 
-            if(!discountTo.equals("0.0")){
-                dis.setVisibility(View.VISIBLE);
-                dis.setText(discountTo);
-                dis_text.setVisibility(View.VISIBLE);
-                Toast.makeText(this, "You got Rs "+discountTo+" off !", Toast.LENGTH_LONG).show();
+            if (!firstS.isEmpty() && !secondS.isEmpty()) {
+                cardView.setVisibility(View.VISIBLE);
+                strF.setText(firstS);
+                strS.setText(secondS);
+                nextBtn.setText("Add Payment Method");
+            } else {
+                cardView.setVisibility(View.GONE);
             }
-            else{
-                dis.setVisibility(View.GONE);
-                dis_text.setVisibility(View.GONE);
-                Toast.makeText(this, "Add more items to avail this offer", Toast.LENGTH_LONG).show();
-            }
-       // }
-    }
+        }
+    //}
+
+
 
     int fetchData(int x) {
         pBar.setVisibility(View.VISIBLE);
