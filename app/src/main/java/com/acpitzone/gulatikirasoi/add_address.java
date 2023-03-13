@@ -4,7 +4,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -56,16 +58,19 @@ public class add_address extends AppCompatActivity {
         String cityStr = cityA.getText().toString();
         String completeStr = completeA.getText().toString();
 
+        SharedPreferences sharedPreferences1 = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        String email = sharedPreferences1.getString("email","");
+
         boolean isValidate = validateData(saveStr,deliveryStr,cityStr,completeStr);
 
         if(!isValidate){
             return;
         }
 
-        addAddressToDB(saveStr,deliveryStr,cityStr,completeStr);
+        addAddressToDB(saveStr,deliveryStr,cityStr,completeStr,email);
     }
 
-    private void addAddressToDB(String saveStr, String deliveryStr, String cityStr, String completeStr) {
+    private void addAddressToDB(String saveStr, String deliveryStr, String cityStr, String completeStr, String email) {
 //        Toast.makeText(this, "Register successfully", Toast.LENGTH_SHORT).show();
 //        Intent i = new Intent(address.this,SignIn.class);
 //        startActivity(i);
@@ -105,6 +110,7 @@ public class add_address extends AppCompatActivity {
                 map.put("delivery",deliveryStr);
                 map.put("city",cityStr);
                 map.put("completeAddress",completeStr);
+                map.put("email",email);
                 return map;
             }
         };

@@ -43,6 +43,7 @@ public class address extends AppCompatActivity implements addressListner{
     List<addressData> data = new ArrayList<>();
     ProgressBar pBar;
     String url = "https://gulatikirasoi.com/address.php";
+    String email;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -53,6 +54,11 @@ public class address extends AppCompatActivity implements addressListner{
         recyclerView = findViewById(R.id.addRecycler);
         addA = findViewById(R.id.add_address);
         pBar = findViewById(R.id.pBar7);
+
+        SharedPreferences sharedPreferences1 = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        email = sharedPreferences1.getString("email","");
+
+
 
         addA.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,13 +98,17 @@ public class address extends AppCompatActivity implements addressListner{
 
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            String id = object.getString("id");
-                            String saveAs1 = object.getString("saveAs");
-                            String delivery1 = object.getString("delivery");
-                            String completeAddress1 = object.getString("completeAddress");
-                            String city1 = object.getString("city");
-                            addressData addressData= new addressData(id, saveAs1, delivery1, completeAddress1, city1);
-                            data.add(addressData);
+
+                            String user_email = object.getString("user_email");
+                            if(user_email.equals(email)) {
+                                String id = object.getString("id");
+                                String saveAs1 = object.getString("saveAs");
+                                String delivery1 = object.getString("delivery");
+                                String completeAddress1 = object.getString("completeAddress");
+                                String city1 = object.getString("city");
+                                addressData addressData = new addressData(id, saveAs1, delivery1, completeAddress1, city1);
+                                data.add(addressData);
+                            }
                         }
                         // Collections.shuffle(data);
                         addressAdapter.upDate(data);

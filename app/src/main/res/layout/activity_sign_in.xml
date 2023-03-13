@@ -69,50 +69,50 @@
                 android:id="@+id/phnEdt1"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:hint="Mobile No."
-                android:inputType="phone"
+                android:hint="Email id"
+                android:inputType="textEmailAddress"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt8"
                 app:layout_constraintWidth_percent=".8"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/edittextbackground"
-                android:drawableLeft="@drawable/baseline_local_phone_24"
+                android:drawableLeft="@drawable/baseline_email_24"
                 android:drawablePadding="13dp"
                 />
 
 
-            <EditText
-                android:id="@+id/passEdt1"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textColor="@color/blue"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/phnEdt1"
-                app:layout_constraintWidth_percent=".8"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/edittextbackground"
-                android:drawableLeft="@drawable/baseline_key_24"
-                android:drawablePadding="13dp"
-                />
+<!--            <EditText-->
+<!--                android:id="@+id/passEdt1"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="40dp"-->
+<!--                android:hint="Password"-->
+<!--                android:inputType="textPassword"-->
+<!--                android:textColor="@color/blue"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/phnEdt1"-->
+<!--                app:layout_constraintWidth_percent=".8"-->
+<!--                android:layout_marginTop="30dp"-->
+<!--                android:background="@drawable/edittextbackground"-->
+<!--                android:drawableLeft="@drawable/baseline_key_24"-->
+<!--                android:drawablePadding="13dp"-->
+<!--                />-->
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Forget Password"
-                android:textColor="@color/yellow"
-                android:textStyle="bold"
-                android:textSize="20dp"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/passEdt1"
-                app:layout_constraintHorizontal_bias="0"
-                android:layout_marginRight="45dp"
-                android:layout_marginTop="20dp"
-                />
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Forget Password"-->
+<!--                android:textColor="@color/yellow"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="20dp"-->
+<!--                android:textAlignment="center"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/passEdt1"-->
+<!--                app:layout_constraintHorizontal_bias="0"-->
+<!--                android:layout_marginRight="45dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                />-->
 
             <Button
                 android:id="@+id/signInS"
@@ -126,7 +126,7 @@
                 android:textAlignment="center"
                 android:backgroundTint="#F6BE00"
                 android:background="@drawable/button_background"
-                app:layout_constraintTop_toBottomOf="@id/passEdt1"
+                app:layout_constraintTop_toBottomOf="@id/phnEdt1"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintWidth_percent=".8"
@@ -164,22 +164,22 @@
                 app:layout_constraintHorizontal_bias="0"
                 />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Skip"
-                android:textColor="@color/yellow"
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/alredy"
-                app:layout_constraintHorizontal_bias="0"
-                android:layout_marginRight="45dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintWidth_percent=".8"
-                />
+<!--            <TextView-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Skip"-->
+<!--                android:textColor="@color/yellow"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="25dp"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textAllCaps="true"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/alredy"-->
+<!--                app:layout_constraintHorizontal_bias="0"-->
+<!--                android:layout_marginRight="45dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                app:layout_constraintWidth_percent=".8"-->
+<!--                />-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

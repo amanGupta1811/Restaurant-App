@@ -43,7 +43,7 @@ public class cart extends AppCompatActivity {
     int x = 0;
 //     float gstI = 0;
     List<car> carList = new ArrayList<>();
-    TextView sub_total, grand_total, gst, deliveryCh, dis, dis_text, strF, strS;
+    TextView sub_total, grand_total, gst, deliveryCh, dis, dis_text, strF, strS, change;
     Button couponBtn,nextBtn;
     int percentAmt, minAmt;
     int y = 0;
@@ -73,6 +73,7 @@ public class cart extends AppCompatActivity {
         cardView = findViewById(R.id.add_Info);
         strF = findViewById(R.id.str_first);
         strS = findViewById(R.id.str_second);
+        change = findViewById(R.id.change);
 
         names = getIntent().getStringArrayListExtra("cartName");
         price = getIntent().getStringArrayListExtra("cartPrice");
@@ -85,7 +86,11 @@ public class cart extends AppCompatActivity {
         String firstS = sharedPreferences.getString("first_Str", "");
         String secondS = sharedPreferences.getString("second_Str", "");
 
-        if(!firstS.isEmpty()&&!secondS.isEmpty()){
+        SharedPreferences sharedPreferences1 = getSharedPreferences("UserDetails", Context.MODE_PRIVATE);
+        String email = sharedPreferences1.getString("email","");
+
+
+        if(!firstS.isEmpty()&&!secondS.isEmpty()&&!email.isEmpty()){
             cardView.setVisibility(View.VISIBLE);
             strF.setText(firstS);
             strS.setText(secondS);
@@ -98,9 +103,32 @@ public class cart extends AppCompatActivity {
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),address.class);
-                startActivityForResult(i,2);
-                //finish();
+
+                if (!email.isEmpty()) {
+
+                    if (!firstS.isEmpty() && !secondS.isEmpty()) {
+                        Intent i = new Intent(getApplicationContext(), paymentMethod.class);
+                        startActivity(i);
+                    } else {
+                        Intent i = new Intent(getApplicationContext(), address.class);
+                        startActivityForResult(i, 2);
+                    }
+                    //finish();
+                }
+                else{
+                    Intent i = new Intent(getApplicationContext(), Register.class);
+                    startActivity(i);
+                    Toast.makeText(getApplicationContext(), "Register yourself first", Toast.LENGTH_LONG).show();
+//                    finish();
+                }
+            }
+        });
+
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), address.class);
+                startActivityForResult(i, 2);
             }
         });
 
