@@ -45,7 +45,6 @@ public class SignIn extends AppCompatActivity {
         }
         loginUserToDatabase(phnStr);
     }
-
     private void loginUserToDatabase(String phnStr) {
         Toast.makeText(this, "SignIn successfully", Toast.LENGTH_SHORT).show();
         Intent i = new Intent(SignIn.this,MainActivity.class);
