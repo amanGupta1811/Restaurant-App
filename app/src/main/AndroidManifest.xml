@@ -16,6 +16,11 @@
         android:theme="@style/Theme.GulatiKiRasoi"
         tools:targetApi="31">
         <activity
+            android:name=".feedback"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            />
+        <activity
             android:name=".otpverification"
             android:exported="false" />
         <activity

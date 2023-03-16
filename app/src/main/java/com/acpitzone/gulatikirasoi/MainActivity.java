@@ -42,4 +42,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+
+        if(bottomNavigationView.getSelectedItemId() == R.id.home){
+            super.onBackPressed();
+            finish();
+        }
+        else{
+            bottomNavigationView.setSelectedItemId(R.id.home);
+        }
+
+    }
 }
