@@ -21,7 +21,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class personFragment extends Fragment {
 
     TextView blank;
-    Button log_out, address, menu, offer, feedback;
+    Button log_out, address, menu, offer, feedback, aboutUs;
     String userName,userMobile,userEmail,userAddress;
     TextView user_name, user_mobile, user_email, user_address, user_address1;
 
@@ -47,6 +47,7 @@ public class personFragment extends Fragment {
         menu = view.findViewById(R.id.btn3);
         user_address1 = view.findViewById(R.id.user_add1);
         feedback = view.findViewById(R.id.btn4);
+        aboutUs = view.findViewById(R.id.btn5);
 
 
 
@@ -60,11 +61,18 @@ public class personFragment extends Fragment {
          userName = sharedPreferences1.getString("name","");
          userMobile = sharedPreferences1.getString("mobile","");
 
-         user_name.setText(userName);
-         user_mobile.setText(userMobile);
-         user_email.setText(userEmail);
-         user_address.setText(firstS);
-         user_address1.setText(secondS);
+         if(!userName.isEmpty()){
+
+             user_name.setText(userName);
+             user_mobile.setText(userMobile);
+             user_email.setText(userEmail);
+             user_address.setText(firstS);
+             user_address1.setText(secondS);
+         }
+         else{
+             user_name.setText("GUEST USER");
+         }
+
 
         log_out.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,7 +109,7 @@ public class personFragment extends Fragment {
                 transaction.replace(R.id.flFragment, offerF);
                 transaction.addToBackStack(null);
                 transaction.commit();
-                getActivity().finish();
+               // getActivity().finish();
             }
         });
 
@@ -113,7 +121,7 @@ public class personFragment extends Fragment {
                 transaction.replace(R.id.flFragment, menuF);
                 transaction.addToBackStack(null);
                 transaction.commit();
-                getActivity().finish();
+               // getActivity().finish();
 //                Intent i =new Intent(getActivity(),paymentMethod.class);
 //                startActivity(i);
                 //getActivity().finish();
@@ -124,6 +132,14 @@ public class personFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getActivity(), com.acpitzone.gulatikirasoi.feedback.class);
+                startActivity(i);
+            }
+        });
+
+        aboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), com.acpitzone.gulatikirasoi.aboutUs.class);
                 startActivity(i);
             }
         });

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -170,7 +171,7 @@ public class address extends AppCompatActivity implements addressListner{
         editor.apply();
 
         Intent intent = new Intent();
-        setResult(2,intent);
+        setResult(Activity.RESULT_OK,intent);
         finish();
     }
 }

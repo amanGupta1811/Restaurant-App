@@ -1,15 +1,13 @@
 package com.acpitzone.gulatikirasoi;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.cardview.widget.CardView;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -24,44 +22,31 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
-public class coupon extends AppCompatActivity implements CouponListner {
+public class aboutUs extends AppCompatActivity {
+
+    TextView aboutUsT;
+    String url = "https://gulatikirasoi.com/aboutUs.php";
     ProgressBar pBar;
-    RecyclerView couponRecycler;
-    private static final int REQUEST_CODE = 5;
-    coupenAdapter coupenAdapter;
-    List<coupen> couponList = new ArrayList<>();
-    List<coupen> data = new ArrayList<>();
-//    String total;
-//    float g_total;
-
-    String url = "https://gulatikirasoi.com/offer.php";
+    CardView cardView;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_coupon);
+        setContentView(R.layout.activity_about_us);
 
+        aboutUsT = findViewById(R.id.txtAboutUs);
+        pBar = findViewById(R.id.pBarG);
+        cardView = findViewById(R.id.card_about);
 
+        fetchAboutUs();
 
-        pBar = findViewById(R.id.pBar2);
-        couponRecycler = findViewById(R.id.coupenRecycler);
-
-        couponRecycler.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
-
-        coupenAdapter = new coupenAdapter(couponList,this);
-
-        fetchData();
-
-        couponRecycler.setAdapter(coupenAdapter);
 
     }
 
-    private void fetchData() {
+    void fetchAboutUs(){
         pBar.setVisibility(View.VISIBLE);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -80,15 +65,14 @@ public class coupon extends AppCompatActivity implements CouponListner {
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
                             String id = object.getString("id");
-                            String offerN = object.getString("offer_name");
-                            String offerC = object.getString("offer_code");
-                            String offerP = object.getString("offer_percent");
-                            String offerM = object.getString("offer_min_amt");
-                            coupen coupen = new coupen(id, offerN, offerC, offerP, offerM);
-                            data.add(coupen);
+                            String about = object.getString("about_us");
+                            aboutUsT.setText(about);
+                            cardView.setVisibility(View.VISIBLE);
                         }
+
+
                         // Collections.shuffle(data);
-                        coupenAdapter.upDate(data);
+
                     } else {
                         Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
@@ -120,45 +104,5 @@ public class coupon extends AppCompatActivity implements CouponListner {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
-
-    }
-
-    @Override
-    public void onCouponClick(coupen coupen) {
-        String percent = coupen.getOfferPercent1();
-        String min = coupen.getOfferMinAmt1();
-        float g_totalD;
-        float discount;
-
-        String total = getIntent().getStringExtra("gtotal");
-        float g_total = Float.parseFloat(total);
-
-        float percentAmt = Float.parseFloat(percent);
-        float minAmt = Float.parseFloat(min);
-
-        if(g_total>=minAmt){
-            discount = g_total*(percentAmt/100);
-            g_totalD = g_total - discount;
-        }
-        else{
-            discount = 0;
-            g_totalD = g_total;
-        }
-
-        String gTotalD = String.valueOf(g_totalD);
-
-//        Intent i = new Intent(coupon.this,cart.class);
-//        //i.putExtra("percentAmt",percentAmt);
-//        //i.putExtra("minAmt",minAmt);
-//        i.putExtra("grandT",gTotalD);
-//      //  i.putExtra("check","10");
-//        startActivity(i);
-
-        Intent intent = new Intent();
-        intent.putExtra("grandT", gTotalD);
-        intent.putExtra("discountT", String.valueOf(discount));
-        setResult(Activity.RESULT_OK,intent);
-        finish();
-
     }
 }

@@ -1,11 +1,14 @@
 package com.acpitzone.gulatikirasoi;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,6 +39,8 @@ public class cart extends AppCompatActivity {
 
     private static final int REQUEST_CODE = 5;
     private static final int REQUEST_CODE_1 = 2;
+    private ActivityResultLauncher<Intent> launcher1;
+    private ActivityResultLauncher<Intent> launcher2;
     RecyclerView cartRecycler;
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> price = new ArrayList<>();
@@ -111,7 +116,8 @@ public class cart extends AppCompatActivity {
                         startActivity(i);
                     } else {
                         Intent i = new Intent(getApplicationContext(), address.class);
-                        startActivityForResult(i, 2);
+//                        startActivityForResult(i, 2);
+                        launcher2.launch(i);
                     }
                     //finish();
                 }
@@ -128,7 +134,8 @@ public class cart extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(getApplicationContext(), address.class);
-                startActivityForResult(i, 2);
+//                startActivityForResult(i, 2);
+                launcher2.launch(i);
             }
         });
 
@@ -141,9 +148,7 @@ public class cart extends AppCompatActivity {
 
         cartRecycler.setAdapter(cartAdapter);
 
-
-
-       // float g_totalD;
+        // float g_totalD;
         for (int j = 0; j < price.size(); j++) {
             x = x + Integer.parseInt(price.get(j));
         }
@@ -159,45 +164,87 @@ public class cart extends AppCompatActivity {
                 in.putExtra("gtotal", String.valueOf(x));
                 // i.putExtra("cartList",carList);
                // y = 1;
-                startActivityForResult(in,5);
+//                startActivityForResult(in,5);
+                launcher1.launch(in);
+            }
+        });
+
+        launcher2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // handle the result of the second intent here
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        SharedPreferences sharedPreferences2 = getSharedPreferences("AddressDetails", Context.MODE_PRIVATE);
+                        String firstSt = sharedPreferences2.getString("first_Str", "");
+                        String secondSt = sharedPreferences2.getString("second_Str", "");
+
+                        if (!firstSt.isEmpty() && !secondSt.isEmpty()) {
+                            cardView.setVisibility(View.VISIBLE);
+                            strF.setText(firstSt);
+                            strS.setText(secondSt);
+                            nextBtn.setText("Add Payment Method");
+                        } else {
+                            cardView.setVisibility(View.GONE);
+                        }
+                    }
+                });
+
+        launcher1 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // handle the result of the first intent her
+            if(result.getResultCode()== Activity.RESULT_OK) {
+                Intent data = result.getData();
+                String updatedTotalAmount = data.getStringExtra("grandT");
+                String discountTo = data.getStringExtra("discountT");
+                grand_total.setText(updatedTotalAmount);
+                if (!discountTo.equals("0.0")) {
+                    dis.setVisibility(View.VISIBLE);
+                    dis.setText(discountTo);
+                    dis_text.setVisibility(View.VISIBLE);
+                    Toast.makeText(this, "You got Rs " + discountTo + " off !", Toast.LENGTH_LONG).show();
+                } else {
+                    dis.setVisibility(View.GONE);
+                    dis_text.setVisibility(View.GONE);
+                    Toast.makeText(this, "Add more items to avail this offer", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == 5 && resultCode == RESULT_OK) {
-//            String updatedTotalAmount = data.getStringExtra("grandT");
-//            String discountTo = data.getStringExtra("discountT");
-//            grand_total.setText(updatedTotalAmount);
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+////        if (requestCode == 5 && resultCode == RESULT_OK) {
+////            String updatedTotalAmount = data.getStringExtra("grandT");
+////            String discountTo = data.getStringExtra("discountT");
+////            grand_total.setText(updatedTotalAmount);
+////
+////            if (!discountTo.equals("0.0")) {
+////                dis.setVisibility(View.VISIBLE);
+////                dis.setText(discountTo);
+////                dis_text.setVisibility(View.VISIBLE);
+////                Toast.makeText(this, "You got Rs " + discountTo + " off !", Toast.LENGTH_LONG).show();
+////            } else {
+////                dis.setVisibility(View.GONE);
+////                dis_text.setVisibility(View.GONE);
+////                Toast.makeText(this, "Add more items to avail this offer", Toast.LENGTH_LONG).show();
+////            }
+////        } else if (requestCode == 2 && resultCode == RESULT_OK) {
+//            SharedPreferences sharedPreferences = getSharedPreferences("AddressDetails", Context.MODE_PRIVATE);
+//            String firstS = sharedPreferences.getString("first_Str", "");
+//            String secondS = sharedPreferences.getString("second_Str", "");
 //
-//            if (!discountTo.equals("0.0")) {
-//                dis.setVisibility(View.VISIBLE);
-//                dis.setText(discountTo);
-//                dis_text.setVisibility(View.VISIBLE);
-//                Toast.makeText(this, "You got Rs " + discountTo + " off !", Toast.LENGTH_LONG).show();
+//            if (!firstS.isEmpty() && !secondS.isEmpty()) {
+//                cardView.setVisibility(View.VISIBLE);
+//                strF.setText(firstS);
+//                strS.setText(secondS);
+//                nextBtn.setText("Add Payment Method");
 //            } else {
-//                dis.setVisibility(View.GONE);
-//                dis_text.setVisibility(View.GONE);
-//                Toast.makeText(this, "Add more items to avail this offer", Toast.LENGTH_LONG).show();
+//                cardView.setVisibility(View.GONE);
 //            }
-//        } else if (requestCode == 2 && resultCode == RESULT_OK) {
-            SharedPreferences sharedPreferences = getSharedPreferences("AddressDetails", Context.MODE_PRIVATE);
-            String firstS = sharedPreferences.getString("first_Str", "");
-            String secondS = sharedPreferences.getString("second_Str", "");
-
-            if (!firstS.isEmpty() && !secondS.isEmpty()) {
-                cardView.setVisibility(View.VISIBLE);
-                strF.setText(firstS);
-                strS.setText(secondS);
-                nextBtn.setText("Add Payment Method");
-            } else {
-                cardView.setVisibility(View.GONE);
-            }
-        }
-    //}
+//        }
+//}
 
 
 

@@ -25,7 +25,6 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
-
 public class feedback extends AppCompatActivity {
     Button submit;
     EditText editFeedback;
@@ -42,7 +41,6 @@ public class feedback extends AppCompatActivity {
         submit = findViewById(R.id.sub_feedback);
         editFeedback = findViewById(R.id.feedback);
         progressBar = findViewById(R.id.pBarF);
-
         submit.setOnClickListener((v)->sendFeedback());
     }
 
@@ -112,6 +110,7 @@ public class feedback extends AppCompatActivity {
         } else if (mobile.isEmpty()) {
             return false;
         } else if (email.isEmpty()) {
+            Toast.makeText(feedback.this,"Register yourself first" , Toast.LENGTH_SHORT).show();
             return false;
         }
         else if(feedback.isEmpty()){

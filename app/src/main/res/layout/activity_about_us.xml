@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".aboutUs">
+
+
+    <ImageView
+        android:id="@+id/img"
+        android:foreground="@drawable/forground_design"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TextView
+                android:id="@+id/txt_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="About Us"
+                android:textColor="@color/blue"
+                android:textStyle="bold"
+                android:textSize="35sp"
+                android:gravity="start"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_margin="20dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/txt_about"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:cardElevation="10dp"
+                app:cardCornerRadius="20dp"
+                android:layout_margin="0dp"
+                android:layout_marginBottom="20dp"
+                app:cardBackgroundColor="@color/yellow"
+                app:cardMaxElevation="12dp"
+                app:cardPreventCornerOverlap="true"
+                android:visibility="gone"
+                app:cardUseCompatPadding="true">
+
+                <TextView
+                    android:id="@+id/txtAboutUs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Guest dfjksdkfdsjkfidfndf iossoifjifoifojer joifjoefierioe nwefoieoifnfoifeojfjieo wejrfewirferoifienrferofgenr oibcwe87384j32md.qw f ;dd[wuhd    bd  8dhpiqgp7wpdb   ;dvu    7udbmnd lpi     ie87o   iuedb   ku  hded    qWDBLU  P9DHDBNPN    D  9WDUW   OJNDWUDUGWKKioibduwebud ifif  ie feiuf eq  jdfkuwu uqwdbqbqbd ujuwiqiquqb uwuw   wuuwhweheh  wewjjdjwhedw uhiwhdwijdi   oq;pdhaldqhdqldfhqlhd eufdbwebfwbfhhqoifi ioowewqh iouqbu uhuwueuuen eudhwehdh euwquuqwu hdiwdhiw dbwqiuhiuu 9e8ux8ciejhh doijcnckenconini duwhdhbd UUHNQ UWBFBHF W8DHD UWUBEBJEBHCEJF UEFEDFHWEIU"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold|normal"
+                    android:layout_gravity="top|start"
+                    android:layout_margin="10dp"
+                    android:layout_marginBottom="0dp"
+                     />
+
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/pBarG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:visibility="gone"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
