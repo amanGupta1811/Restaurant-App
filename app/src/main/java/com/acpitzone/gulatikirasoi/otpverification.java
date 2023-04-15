@@ -26,15 +26,14 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
-
 public class otpverification extends AppCompatActivity {
-
     EditText otpV;
     Button verify;
     String url = "https://gulatikirasoi.com/otpVerification.php";
     ProgressBar progressBar;
     String otp;
-
+//    String email = "1";
+//    String emailL = "0";
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,24 +58,34 @@ public class otpverification extends AppCompatActivity {
 //                    Toast.makeText(getApplicationContext(),"Enter otp",Toast.LENGTH_LONG).show();
 //                }
 //                else{
-//
+
 //                    verifyOtp(otp,email,mobile,name);
 //                }
                 verifyOtp();
             }
         });
     }
-
     void verifyOtp(){
+        SharedPreferences sharedPreferences1 = getSharedPreferences("SignInDetails", Context.MODE_PRIVATE);
+        String emailS = sharedPreferences1.getString("email", "");
+//        String secondSt = sharedPreferences2.getString("second_Str", "");
+        SharedPreferences sharedPreferences2= getSharedPreferences("RegisterDetails", Context.MODE_PRIVATE);
+        String emailR = sharedPreferences2.getString("email", "");
+
+
         String email = getIntent().getStringExtra("emailR");
         String name = getIntent().getStringExtra("nameR");
         String mobile = getIntent().getStringExtra("mobileR");
-        String otp = otpV.getText().toString();
-        if(!otp.isEmpty()){
-            verifyOtpDB(otp,email,mobile,name);
 
-        }
-        else{
+        String emailL = getIntent().getStringExtra("emailL");
+        String nameL = getIntent().getStringExtra("nameL");
+        String mobileL = getIntent().getStringExtra("mobileL");
+        String otp = otpV.getText().toString();
+        if(!otp.isEmpty() && !emailR.isEmpty()){
+            verifyOtpDB(otp,email,mobile,name);
+        } else if (!otp.isEmpty() && !emailS.isEmpty()) {
+            verifyOtpDB(otp,emailL,mobileL,nameL);
+        } else{
             Toast.makeText(getApplicationContext(),"Enter otp",Toast.LENGTH_LONG).show();
             //verifyOtp(otp,email,mobile,name);
         }

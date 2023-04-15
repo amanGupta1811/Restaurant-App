@@ -58,12 +58,6 @@ public class SpalshScreen extends AppCompatActivity {
                 }
             }
         });
-
-
-
-
-
-
     }
     public void register(View view){
 

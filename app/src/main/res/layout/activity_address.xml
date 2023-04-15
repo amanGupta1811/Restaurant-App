@@ -42,13 +42,11 @@
                 android:id="@+id/addRecycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layout_constraintTop_toBottomOf="@id/add_Const"
                 tools:listitem="@layout/address"
-
+                app:layout_constraintTop_toBottomOf="@id/add_Const"
                 android:layout_marginTop="80dp"
+
                 />
-
-
 
     <ProgressBar
         android:id="@+id/pBar7"

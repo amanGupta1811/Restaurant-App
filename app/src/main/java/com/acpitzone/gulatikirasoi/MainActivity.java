@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.person:
                         fragment = new personFragment();
                         break;
-                    case R.id.settings:
-                        fragment = new settingFragment();
-                        break;
+//                    case R.id.settings:
+//                        fragment = new settingFragment();
+//                        break;
                     case R.id.notification:
                         fragment = new notificationFragment();
                         break;

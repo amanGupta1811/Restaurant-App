@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Gulati Ki Rasoi"
 include ':app'
+include ':mylibrary'

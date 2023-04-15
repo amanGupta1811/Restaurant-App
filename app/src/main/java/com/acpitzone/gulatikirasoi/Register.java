@@ -80,6 +80,17 @@ public class Register extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),response,Toast.LENGTH_SHORT).show();
                 progressBar.setVisibility(View.GONE);
                 if(response.toString().equals("SignUp Succesfully")){
+
+                    SharedPreferences sharedPreferences = getSharedPreferences("RegisterDetails", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("email", emailStr);
+                    editor.apply();
+
+                    SharedPreferences sharedPreferences1 = getSharedPreferences("SignInDetails", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor1 = sharedPreferences1.edit();
+                    editor1.putString("email", "");
+                    editor1.apply();
+
                     Intent i = new Intent(Register.this, otpverification.class);
                     i.putExtra("emailR",emailStr);
                     i.putExtra("nameR",nameStr);
